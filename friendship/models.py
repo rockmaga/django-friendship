@@ -369,12 +369,13 @@ class Friend(models.Model):
     objects = FriendshipManager()
 
     class Meta:
+        ordering = ['to_user']
         verbose_name = _('Friend')
         verbose_name_plural = _('Friends')
         unique_together = ('from_user', 'to_user')
 
     def __str__(self):
-        return "User #%s is friends with #%s" % (self.to_user_id, self.from_user_id)
+        return "{}\'s friend: {}" % (self.to_user_id, self.from_user_id)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
@@ -470,12 +471,13 @@ class Follow(models.Model):
     objects = FollowingManager()
 
     class Meta:
+        ordering = ['follower']
         verbose_name = _('Following Relationship')
         verbose_name_plural = _('Following Relationships')
         unique_together = ('follower', 'followee')
 
     def __str__(self):
-        return "User #%s follows #%s" % (self.follower_id, self.followee_id)
+        return "{}\'s follower: {}" % (self.follower_id, self.followee_id)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
@@ -571,12 +573,13 @@ class Block(models.Model):
     objects = BlockManager()
 
     class Meta:
+        ordering = ['blocker']
         verbose_name = _('Blocker Relationship')
         verbose_name_plural = _('Blocked Relationships')
         unique_together = ('blocker', 'blocked')
 
     def __str__(self):
-        return "User #%s blocks #%s" % (self.blocker_id, self.blocked_id)
+        return "{} blocks {}".format(self.blocker, self.blocked)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
