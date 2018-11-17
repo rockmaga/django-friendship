@@ -374,7 +374,7 @@ class Friend(models.Model):
         unique_together = ('from_user', 'to_user')
 
     def __str__(self):
-        return "User #%s is friends with #%s" % (self.to_user_id, self.from_user_id)
+        return '{} \'s frined: {}'.format(self.to_user, self.from_user)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
@@ -475,7 +475,7 @@ class Follow(models.Model):
         unique_together = ('follower', 'followee')
 
     def __str__(self):
-        return "User #%s follows #%s" % (self.follower_id, self.followee_id)
+        return "{} \'s follower:{}".format(self.to_user, self.from_user)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
@@ -576,7 +576,7 @@ class Block(models.Model):
         unique_together = ('blocker', 'blocked')
 
     def __str__(self):
-        return "User #%s blocks #%s" % (self.blocker_id, self.blocked_id)
+        return "{} blocks {}".format(self.to_user, self.from_user)
 
     def save(self, *args, **kwargs):
         # Ensure users can't be friends with themselves
